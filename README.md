@@ -123,7 +123,7 @@ We welcome contributions from developers of all skill levels. To get started:
 ---
 
 ## 💬 Feedback
-If you have ideas or suggestions, feel free to open an issue or reach out via email at [your-email@example.com].
+If you have ideas or suggestions, feel free to open an issue or reach out via email at [fonyuyjudegita@gmail.com].
 
 ---
 
@@ -132,12 +132,6 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ---
 
-## 🛤️ Roadmap
-
-- Add gamification elements, such as achievements and leaderboards.
-- Support custom terminal themes.
-- Enable saving and loading learning progress.
-- Create an API for third-party tool integrations.
 
 ---
 
