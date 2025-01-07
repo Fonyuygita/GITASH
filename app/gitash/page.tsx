@@ -13,6 +13,8 @@ import { toggleDarkMode } from '@/utils/themeUtils';
 import { parseCommand, isGlobalCommand, scrollToBottom } from '@/utils/terminalUtils';
 import { HistoryEntry } from '@/types';
 import { addToHistory, clearHistory } from '@/utils/historyUtils';
+import Image from 'next/image';
+import Link from 'next/link';
 // import { addToHistory, clearHistory } from '@/utils/HistoryUtils';
 const GridBackground = () => {
     return (
@@ -148,8 +150,16 @@ ${emojis.command} exit: Exit current learning mode`,
     const currentStepInfo = currentTool ? terminalSteps[currentTool]?.steps[currentStep] : null;
 
     return (
-        <div className={`min-h-screen ${isDarkMode ? 'bg-gray-900' : 'bg-gray-50'} p-4 overflow-hidden`}>
+        <div className={`min-h-screen ${isDarkMode ? 'bg-gray-900' : 'bg-gray-50'} p-4 overflow-hidden relative`}>
             <GridBackground />
+            <Link className="fixed top-[-3%] left-2" href="/">
+                <Image
+                    src="/l1.png"
+                    alt="logo"
+                    width={150}
+                    height={150}
+                />
+            </Link>
             <div className="flex justify-end mb-4">
                 <ThemeSwitcher
                     isDarkMode={isDarkMode}
