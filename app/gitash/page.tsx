@@ -12,7 +12,33 @@ import { welcomeArt } from '@/constants/welcome';
 import { toggleDarkMode } from '@/utils/themeUtils';
 import { parseCommand, isGlobalCommand, scrollToBottom } from '@/utils/terminalUtils';
 import { HistoryEntry } from '@/types';
-import { addToHistory, clearHistory } from '@/utils/HistoryUtils';
+import { addToHistory, clearHistory } from '@/utils/historyUtils';
+// import { addToHistory, clearHistory } from '@/utils/HistoryUtils';
+const GridBackground = () => {
+    return (
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            <div className="relative w-full h-full">
+                {/* Horizontal lines */}
+                {[...Array(20)].map((_, i) => (
+                    <div
+                        key={`h-${i}`}
+                        className="absolute w-full h-px bg-gray-700/20"
+                        style={{ top: `${(i + 1) * 5}%` }}
+                    />
+                ))}
+
+                {/* Vertical lines */}
+                {[...Array(20)].map((_, i) => (
+                    <div
+                        key={`v-${i}`}
+                        className="absolute top-0 bottom-0 w-px bg-gray-700/20"
+                        style={{ left: `${(i + 1) * 5}%` }}
+                    />
+                ))}
+            </div>
+        </div>
+    );
+};
 
 const TerminalLearning = () => {
     const [isDarkMode, setIsDarkMode] = useState(true);
@@ -22,7 +48,7 @@ const TerminalLearning = () => {
     const [currentStep, setCurrentStep] = useState<number>(0);
     const scrollAreaRef = useRef<HTMLDivElement | null>(null);
 
-    const handleCommand = (cmd: string): void => {
+    const handleCommand = (cmd: string): void | string => {
         const trimmedCmd = parseCommand(cmd);
 
         if (trimmedCmd === 'clear') {
@@ -30,12 +56,15 @@ const TerminalLearning = () => {
             return;
         }
 
+
+
+
         if (trimmedCmd === 'help') {
             addToHistory(
                 history,
                 setHistory,
                 `${emojis.hint} Available commands:
-${emojis.command} select <tool>: Choose a terminal to learn (${Object.keys(terminalSteps).join(', ')})
+${emojis.command} select <tool>: Choose a terminal to learn (${Object.keys(terminalSteps).join(' | ')})
 ${emojis.command} help: Show this help message
 ${emojis.command} clear: Clear the terminal
 ${emojis.command} exit: Exit current learning mode`,
@@ -59,17 +88,23 @@ ${emojis.command} exit: Exit current learning mode`,
             const steps = terminalSteps[currentTool]?.steps || [];
             const currentStepInfo = steps[currentStep];
 
+            // if command is valid
+
             if (currentStepInfo && trimmedCmd.startsWith(currentStepInfo.command)) {
                 addToHistory(history, setHistory, `${emojis.success} Correct! You executed: ${currentStepInfo.command}`, 'success');
                 addToHistory(history, setHistory, `${emojis.hint} ${currentStepInfo.nextHint}`, 'info');
+                addToHistory(history, setHistory, `${emojis.progress} ${currentStepInfo.explanation}`, 'info');
 
                 if (currentStep < steps.length - 1) {
                     setCurrentStep(currentStep + 1);
                 } else {
+                    //  TERMINAL GAME COMPLETION
                     addToHistory(history, setHistory, `${emojis.celebration} You have completed all steps for ${terminalSteps[currentTool]?.name}!`, 'success');
                 }
                 return;
             }
+
+            //  COMMAND IS INVALID
 
             addToHistory(history, setHistory, `${emojis.error} Invalid command for ${terminalSteps[currentTool]?.name}.`, 'error');
             return;
@@ -79,11 +114,13 @@ ${emojis.command} exit: Exit current learning mode`,
     };
 
     const handleSelectTool = (toolName: string): void => {
+        // check is tool is indeed in the terminalSteps
         if (terminalSteps[toolName]) {
             setCurrentTool(toolName);
             setCurrentStep(0);
             addToHistory(history, setHistory, `${emojis.success} Switched to ${terminalSteps[toolName].name} learning mode.`, 'info');
             addToHistory(history, setHistory, `${emojis.learning} ${terminalSteps[toolName].description}`, 'info');
+            // {terminalSteps[toolName].description}`, 'info');
         } else {
             addToHistory(history, setHistory, `${emojis.error} Unknown tool: ${toolName}`, 'error');
         }
@@ -111,7 +148,8 @@ ${emojis.command} exit: Exit current learning mode`,
     const currentStepInfo = currentTool ? terminalSteps[currentTool]?.steps[currentStep] : null;
 
     return (
-        <div className={`min-h-screen ${isDarkMode ? 'bg-gray-900' : 'bg-gray-50'} p-4`}>
+        <div className={`min-h-screen ${isDarkMode ? 'bg-gray-900' : 'bg-gray-50'} p-4 overflow-hidden`}>
+            <GridBackground />
             <div className="flex justify-end mb-4">
                 <ThemeSwitcher
                     isDarkMode={isDarkMode}

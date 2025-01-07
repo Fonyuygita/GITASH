@@ -56,7 +56,7 @@
   }
 
   .heading {
-    @apply uppercase bg-black px-6 py-3 font-work-sans font-extrabold text-white sm:text-[54px] sm:leading-[64px] text-[36px] leading-[46px] max-w-5xl text-center my-5;
+    @apply uppercase bg-gray-900 px-6 py-3 font-work-sans font-extrabold text-white sm:text-[54px] sm:leading-[64px] text-[26px]  w-full  my-5;
   }
 
   .sub-heading {
@@ -230,4 +230,23 @@
 
 .w-md-editor-toolbar {
   padding: 10px !important;
+}
+
+@keyframes float-in {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.9);
+  }
+  50% {
+    opacity: 0.5;
+    transform: translateY(15px) scale(1);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1.1);
+  }
+}
+
+.animate-float-in {
+  animation: float-in 1.5s ease-out forwards;
 }

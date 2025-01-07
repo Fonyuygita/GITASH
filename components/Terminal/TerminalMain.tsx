@@ -29,14 +29,14 @@ const TerminalMain: React.FC<TerminalMainProps> = ({
     }, [history]);
 
     return (
-        <Card className={`min-h-[80vh] ${isDarkMode ? 'bg-gray-800 border-gray-700' : 'bg-white'}`}>
+        <Card className={` border-4 border-green-400  min-h-[80vh] ${isDarkMode ? 'bg-gray-800 ' : 'bg-white'}`}>
             {/* Terminal Header */}
             <CardHeader className="pb-3">
                 <CardTitle className='text-white font-sans font-bolder font-3xl flex items-center justify-center'>
                     <Terminal />
                     GitashLearn Terminal</CardTitle>
                 <CardDescription className='text-gray-300 flex items-center justify-center'>
-                    Interactive terminal learning environment - Type 'help' for commands
+                    {"Interactive terminal learning environment - Type 'help' for commands"}
                 </CardDescription>
             </CardHeader>
 

@@ -162,7 +162,7 @@ export const terminalSteps: Record<string, LearningPath> = {
       "Learn PowerShell commands for advanced Windows system administration",
     steps: [
       {
-        command: "Get-ChildItem",
+        command: "GET",
         explanation:
           "Lists items in current location. PowerShell's equivalent of 'ls' or 'dir'. Think of it as taking inventory of your digital storage.",
         nextHint: "Try changing location using 'Set-Location'",
@@ -259,10 +259,13 @@ export const terminalSteps: Record<string, LearningPath> = {
   },
 };
 
+// functionality to get next command
+
 export const getNextCommand = (
   tool: string,
   currentCommand: string
 ): CommandStep | null => {
+  // you not gonna get any command if you don't select any tool step, for examples <select git>
   const toolSteps = terminalSteps[tool]?.steps;
   if (!toolSteps) return null;
 
@@ -271,9 +274,14 @@ export const getNextCommand = (
       step.command === currentCommand || currentCommand.startsWith(step.command)
   );
 
+  // if index is out of bound
+
   if (currentIndex === -1 || currentIndex === toolSteps.length - 1) return null;
+  // Finally move to the next step
   return toolSteps[currentIndex + 1];
 };
+
+// Making sure that command  is valid
 
 export const validateCommand = (tool: string, command: string): boolean => {
   const toolSteps = terminalSteps[tool]?.steps;
