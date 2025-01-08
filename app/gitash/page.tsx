@@ -15,6 +15,7 @@ import { HistoryEntry } from '@/types';
 import { addToHistory, clearHistory } from '@/utils/historyUtils';
 import Image from 'next/image';
 import Link from 'next/link';
+import NavigationButton from '@/components/Alert/AlertWarning';
 // import { addToHistory, clearHistory } from '@/utils/HistoryUtils';
 const GridBackground = () => {
     return (
@@ -52,7 +53,8 @@ const TerminalLearning = () => {
 
     const handleCommand = (cmd: string): void | string => {
         const trimmedCmd = parseCommand(cmd);
-
+        console.log(trimmedCmd)
+        console.log(input);
         if (trimmedCmd === 'clear') {
             clearHistory(setHistory);
             return;
@@ -89,10 +91,13 @@ ${emojis.command} exit: Exit current learning mode`,
         if (currentTool) {
             const steps = terminalSteps[currentTool]?.steps || [];
             const currentStepInfo = steps[currentStep];
+            console.log(currentStepInfo)
+            console.log(trimmedCmd.startsWith(currentStepInfo?.command.toLocaleLowerCase()))
 
             // if command is valid
+            const checkStartWith = trimmedCmd.startsWith(currentStepInfo?.command.toLocaleLowerCase())
 
-            if (currentStepInfo && trimmedCmd.startsWith(currentStepInfo.command)) {
+            if (currentStepInfo && checkStartWith) {
                 addToHistory(history, setHistory, `${emojis.success} Correct! You executed: ${currentStepInfo.command}`, 'success');
                 addToHistory(history, setHistory, `${emojis.hint} ${currentStepInfo.nextHint}`, 'info');
                 addToHistory(history, setHistory, `${emojis.progress} ${currentStepInfo.explanation}`, 'info');
@@ -152,14 +157,16 @@ ${emojis.command} exit: Exit current learning mode`,
     return (
         <div className={`min-h-screen ${isDarkMode ? 'bg-gray-900' : 'bg-gray-50'} p-4 overflow-hidden relative`}>
             <GridBackground />
-            <Link className="fixed top-[-3%] left-2" href="/">
+            {/* <Link className="fixed top-[-3%] left-2" href="/">
                 <Image
                     src="/l1.png"
                     alt="logo"
                     width={150}
                     height={150}
                 />
-            </Link>
+            </Link> */}
+
+            <NavigationButton />
             <div className="flex justify-end mb-4">
                 <ThemeSwitcher
                     isDarkMode={isDarkMode}
