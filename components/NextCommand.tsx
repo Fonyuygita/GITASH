@@ -3,7 +3,7 @@ import React from 'react';
 type NextCommandCardProps = {
     nextCommand: string | null;
     explanation: string | null;
-    isDarkMode: boolean;
+    isDarkMode?: boolean;
 };
 
 const NextCommandCard: React.FC<NextCommandCardProps> = ({ nextCommand, explanation, isDarkMode }) => {
