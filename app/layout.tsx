@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import DeviceDetectionPopup from "@/components/DeviceDection";
 
 const workSans = localFont({
   src: [
@@ -68,6 +69,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={workSans.variable}>
+        <DeviceDetectionPopup />
         {children}
       </body>
     </html>
