@@ -13,8 +13,7 @@ import { toggleDarkMode } from '@/utils/themeUtils';
 import { parseCommand, isGlobalCommand, scrollToBottom } from '@/utils/terminalUtils';
 import { HistoryEntry } from '@/types';
 import { addToHistory, clearHistory } from '@/utils/historyUtils';
-import Image from 'next/image';
-import Link from 'next/link';
+
 import NavigationButton from '@/components/Alert/AlertWarning';
 // import { addToHistory, clearHistory } from '@/utils/HistoryUtils';
 const GridBackground = () => {
@@ -166,7 +165,10 @@ ${emojis.command} exit: Exit current learning mode`,
                 />
             </Link> */}
 
-            <NavigationButton />
+            <NavigationButton
+                isDarkMode={isDarkMode}
+
+            />
             <div className="flex justify-end mb-4">
                 <ThemeSwitcher
                     isDarkMode={isDarkMode}
